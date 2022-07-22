@@ -1,8 +1,8 @@
 # Build API for a seeking job website
  > A project used to build api for front-end website
 ## Requirements
-- PHP >= 7.3
-- Laravel >= 8.4
+- PHP  8.0.2
+- Laravel 9.19
 ## Get started
 - Install ```vendor``` folder
 ```shell
