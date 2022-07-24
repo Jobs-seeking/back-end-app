@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobType extends Model
 {
+    protected $table = 'jobtype';
     use HasFactory;
+
+    public function job() {
+        return $this->belongsTo(Job::class, 'job_id', 'id');
+    }
 }
