@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserCollection;
+use App\Http\Resources\UserReSource;
+use App\Models\UserInfo;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return UserReSource::collection(UserInfo::paginate(10));
     }
 
     /**
@@ -45,7 +48,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return new UserReSource(UserInfo::findOrFail($id));
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ApplicantReSource;
+use App\Models\Applicant;
 use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
@@ -13,7 +15,7 @@ class ApplicantController extends Controller
      */
     public function index()
     {
-        //
+        return ApplicantReSource::collection(Applicant::paginate(10));
     }
 
     /**
@@ -45,7 +47,7 @@ class ApplicantController extends Controller
      */
     public function show($id)
     {
-        //
+        return new ApplicantReSource(Applicant::findOrFail($id));
     }
 
     /**

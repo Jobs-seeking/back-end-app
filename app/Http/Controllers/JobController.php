@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\JobReSource;
+use App\Models\Job;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -13,7 +15,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        return JobReSource::collection(Job::paginate(10));
     }
 
     /**
@@ -45,7 +47,7 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        //
+        return new JobReSource(Job::findOrFail($id));
     }
 
     /**
