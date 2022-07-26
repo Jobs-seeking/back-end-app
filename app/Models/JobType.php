@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobType extends Model
 {
-    protected $table = 'jobtype';
+    protected $table = 'jobtypes';
     use HasFactory;
-
+    protected $filltable =[
+        'id',
+        'job_type',
+    ];
     public function job() {
         return $this->belongsTo(Job::class, 'job_id', 'id');
     }

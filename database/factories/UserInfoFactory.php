@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserInfo>
@@ -17,18 +16,19 @@ class UserInfoFactory extends Factory
      */
     public function definition()
     {
-        $status = ['active', 'unactive'];
+        $status = ['active', 'inactive'];
         $role = ['student', 'admin', 'company'];
         return [
-            'email' => fake()->email(),
-            'password' => fake()->password(),
-            'name' => fake()->name(),
-            'dateOfBirth' => fake()->dateTime(),
-            'phone' => fake()->phoneNumber(),
-            'description' => fake()->paragraphs(),
-            'address' => fake()->address(),
-            'stutus' => $status[rand(0,1)],
-            'role' => $role[rand(0,2)],
+            'email' =>$this->faker->email(),
+            'password' =>$this->faker->bothify('########'),
+            'name' =>$this->faker->name(),
+            'image' =>$this->faker->imageUrl(640, 480, 'avatar', true),
+            'dateOfBirth' => $this->faker->dateTime(),
+            'phone' => $this->faker->phoneNumber(),
+            'description' => $this->faker->text(),
+            'address' => $this->faker->address(),
+            'status' => $status[$this->faker->numberBetween(0,1)],
+            'role' => $role[$this->faker->numberBetween(0,2)],
         ];
     }
 }

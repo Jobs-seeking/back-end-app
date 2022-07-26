@@ -16,17 +16,14 @@ class JobDetailFactory extends Factory
      */
     public function definition()
     {
-        $status = ['active', 'unactive'];
         return [
-            'title' => fake()->name(),
-            'description' => fake()->paragraphs(),
-            'required' => fake()->paragraphs(),
-            'technical' => fake()->paragraphs(),
-            'salary' => rand(1000, 9999),
-            'deadline' => fake()->dateTime(),
-            'stutus' => $status[rand(0,1)],
-            'job_id' => rand(1,10),
-
+            'title' => $this->faker->name(),
+            'description' => $this->faker->text(500),
+            'required' => $this->faker->text(500),
+            'technical' => $this->faker->text(500),
+            'salary' => $this->faker->randomDigit(),
+            'deadline' => $this->faker->dateTime(),
+            'job_id' => $this->faker->numberBetween(1,10),
         ];
     }
 }

@@ -3,6 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Applicant;
+use App\Models\JobDetail;
+use App\Models\JobType;
+use App\Models\UserInfo;
+use Illuminate\Contracts\Queue\Job;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,7 +20,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            UserInfoSeeder::class,
+            JobTypeSeeder::class,
+            JobSeeder::class,
+            JobDetailSeeder::class,
+            ApplicantSeeder::class,
+        ]);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

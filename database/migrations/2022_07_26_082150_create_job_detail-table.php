@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('JobDetail', function (Blueprint $table) {
+        Schema::create('JobDetails', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title', 255);
-            $table->string('description', 1000);
-            $table->string('required', 1000);
-            $table->string('technical', 1000);
-            $table->unsignedDouble('salary', 100);
-            $table->date('deadline');
-            $table->unsignedInteger('job_id');
+            $table->string('title', 255)->nullable();
+            $table->string('description', 1000)->nullable();
+            $table->string('required', 1000)->nullable();
+            $table->string('technical', 1000)->nullable();
+            $table->unsignedDouble('salary', 100)->nullable();
+            $table->date('deadline')->nullable();
+            $table->unsignedInteger('job_id')->nullable();
             $table->timestamps();
         });
     }

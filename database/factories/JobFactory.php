@@ -17,8 +17,8 @@ class JobFactory extends Factory
     public function definition()
     {
         return [
-            'company_id' => rand(1,10),
-            'job_type_id' => rand(1,10),
+            'company_id' =>$this->faker->numberBetween(1,10),
+            'job_type_id' =>$this->faker->numberBetween(1,10),
         ];
     }
 }

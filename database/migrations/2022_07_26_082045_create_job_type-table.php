@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('jobtype', function (Blueprint $table) {
+        Schema::create('jobtypes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('job_type');
+            $table->string('job_type')->nullable();
             $table->timestamps();
         });
     }

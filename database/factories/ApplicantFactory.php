@@ -18,11 +18,11 @@ class ApplicantFactory extends Factory
     public function definition()
     {
         return [
-            'job_id' => rand(1, 10),
-            'student_id' => rand(1, 10),
-            'year_experience' => rand(1, 5),
-            'cv' => fake()->imageUrl(),
-            'cover_letter' =>fake()->imageUrl(),
+            'job_id' => $this->faker->numberBetween(1, 10),
+            'student_id' => $this->faker->numberBetween(1, 10),
+            'year_experience' => $this->faker->numberBetween(1, 5),
+            'cv' => $this->faker->imageUrl(640, 480, 'job_cv', true),
+            'cover_letter' =>$this->faker->imageUrl(640, 480, 'job_cover_letter', true),
         ];
     }
 }

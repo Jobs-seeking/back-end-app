@@ -15,17 +15,17 @@ return new class extends Migration
     {
         Schema::create('applicants', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cv', 1000);
-            $table->string('cover_letter', 1000);
-            $table->unsignedInteger('job_id');
-            $table->unsignedInteger('student_id');
-            $table->unsignedInteger('year_experience');
+            $table->string('cv', 1000)->nullable();
+            $table->string('cover_letter', 1000)->nullable();
+            $table->unsignedInteger('job_id')->nullable();
+            $table->unsignedInteger('student_id')->nullable();
+            $table->unsignedInteger('year_experience')->nullable();
             $table->timestamps();
 
             $table->foreign('job_id')->references('id')->on('jobs')
             ->onUpdate('cascade')
             ->onDelete('cascade');
-            $table->foreign('student_id')->references('id')->on('userinfo')
+            $table->foreign('student_id')->references('id')->on('userinfos')
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });

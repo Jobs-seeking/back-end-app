@@ -11,7 +11,11 @@ class Job extends Model
 {
     protected $table = 'jobs';
     use HasFactory;
-
+    protected $filltable =[
+        'id',
+        'company_id',
+        'job_type_id',
+    ];
     public function jobDetail() {
         return $this->hasOne(JobDetail::class, 'job_id', 'id');
     }

@@ -17,7 +17,7 @@ class JobTypeFactory extends Factory
     public function definition()
     {
         return [
-            'job_type_id' => fake()->name(),
+            'job_type' => $this->faker->name(),
         ];
     }
 }

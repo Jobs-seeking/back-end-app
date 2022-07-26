@@ -7,6 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserInfo extends Model
 {
-    protected $table = 'userinfo';
+    protected $table = 'userinfos';
     use HasFactory;
+    protected $filltable = [
+        'id',
+        'email',
+        'password',
+        'dateOfBirth',
+        'phone',
+        'description',
+        'address',
+        'status',
+        'role',
+    ];
 }
