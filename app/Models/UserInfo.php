@@ -20,4 +20,5 @@ class UserInfo extends Model
         'status',
         'role',
     ];
+
 }
