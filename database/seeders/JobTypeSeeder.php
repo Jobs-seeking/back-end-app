@@ -15,6 +15,6 @@ class JobTypeSeeder extends Seeder
      */
     public function run()
     {
-        JobType::factory()->count(20)->create();
+        JobType::factory()->count(10)->create();
     }
 }

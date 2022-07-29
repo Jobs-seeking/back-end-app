@@ -15,6 +15,6 @@ class JobDetailSeeder extends Seeder
      */
     public function run()
     {
-        JobDetail::factory()->count(20)->create();
+        JobDetail::factory()->count(50)->create();
     }
 }

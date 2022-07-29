@@ -15,8 +15,18 @@ cp .env.example .env
 ```shell
 php artisan key:generate
 ```
+- Open Xampp then start ```Apache``` and ```MySQL```
+- Create database name ```jobs_seeking``` and change the ```DB_DATABASE=jobs_seeking``` into ```.env``` file
+- Migrate data from migrations to database and fake data
+```shell
+php artisan migrate
+```
+```shell
+php artisan db:seed
+```
 - Run server by the follow command line
 ```shell
 php artisan serve
 ```
+
 
