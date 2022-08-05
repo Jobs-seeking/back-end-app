@@ -28,6 +28,9 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/users', 'create');
     Route::put('/users/{user}', 'update');
     Route::delete('/users/{user}', 'delete');
+    Route::get('/token', 'getToken');
+    Route::post('/users/login', 'onLogin');
+    Route::post('/users/register', 'onRegister');
 });
 
 Route::controller(JobController::class)->group(function () {
