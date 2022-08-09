@@ -3,12 +3,6 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\Applicant;
-use App\Models\JobDetail;
-use App\Models\JobType;
-use App\Models\UserInfo;
-use Illuminate\Contracts\Queue\Job;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            UserInfoSeeder::class,
+            UserSeeder::class,
             JobTypeSeeder::class,
             JobSeeder::class,
             JobDetailSeeder::class,

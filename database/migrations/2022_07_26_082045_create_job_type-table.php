@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('jobtypes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('job_type')->nullable();
+            $table->string('job_type');
             $table->timestamps();
         });
     }

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\ApplicantReSource;
-use App\Models\Applicant;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\JobResource;
+use App\Models\Job;
 use Illuminate\Http\Request;
 
-class ApplicantController extends Controller
+class JobController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class ApplicantController extends Controller
      */
     public function index()
     {
-        return ApplicantReSource::collection(Applicant::paginate(10));
+        return JobResource::collection(Job::paginate(10));
     }
 
     /**
@@ -36,7 +37,8 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $job = Job::create($request->all());
+        return new JobResource($job);
     }
 
     /**
@@ -45,9 +47,9 @@ class ApplicantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Job $job)
     {
-        return new ApplicantReSource(Applicant::findOrFail($id));
+        return new JobResource($job);
     }
 
     /**
@@ -68,9 +70,10 @@ class ApplicantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Job $job)
     {
-        //
+        $job->update($request->all());
+        return new JobResource($job);
     }
 
     /**
@@ -79,8 +82,8 @@ class ApplicantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Job $job)
     {
-        //
+        $job->delete();
     }
 }

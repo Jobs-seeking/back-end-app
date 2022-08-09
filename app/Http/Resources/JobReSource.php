@@ -2,9 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Models\JobDetail;
+use App\Models\JobType;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class JobReSource extends JsonResource
+class JobResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +19,9 @@ class JobReSource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'company_id' => $this->company_id,
-            'job_type_id' => $this->job_type_id,
+            'company' => new UserResource(User::where('id', $this->company_id)->first()),
+            'jobType' => new JobTypeResource(JobType::where('id', $this->job_type_id)->first()),
+            'jobDetail'=> new JobDetailResource(JobDetail::where('job_id',$this->id)->first()),
         ];
     }
 }

@@ -13,13 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('userinfos', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email', 255)->nullable();
-            $table->string('password', 50)->nullable();
+            $table->string('email', 255);
+            $table->string('password', 50);
             $table->string('name', 255)->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->date('dateOfBirth', 255)->nullable();
             $table->string('phone', 30)->nullable();
+            $table->string('level', 255)->nullable();
             $table->string('image', 1000)->nullable();
             $table->string('description', 1000)->nullable();
             $table->string('address', 255)->nullable();

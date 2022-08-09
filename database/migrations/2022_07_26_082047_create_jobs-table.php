@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('job_type_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('company_id')->references('id')->on('userinfos')
+            $table->foreign('company_id')->references('id')->on('users')
             ->onUpdate('cascade')
             ->onDelete('cascade');
 
