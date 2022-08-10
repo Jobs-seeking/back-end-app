@@ -19,7 +19,7 @@ class JobResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'company' => new UserResource(User::where('id', $this->company_id)->first()),
+            'company' => new UserResource(User::where('id', $this->company_id)->where('role', "company")->first()),
             'jobType' => new JobTypeResource(JobType::where('id', $this->job_type_id)->first()),
             'jobDetail'=> new JobDetailResource(JobDetail::where('job_id',$this->id)->first()),
         ];

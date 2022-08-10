@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,10 @@ class JobFactory extends Factory
      */
     public function definition()
     {
+        $companies = User::where('role','company')->get();
+        $length = $companies->count();
         return [
-            'company_id' =>$this->faker->numberBetween(1,10),
+            'company_id' =>$companies[$this->faker->numberBetween(0,$length-1)],
             'job_type_id' =>$this->faker->numberBetween(1,10),
         ];
     }
