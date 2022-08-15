@@ -25,4 +25,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource('users', UserController::class)->except(['edit','create']);
 Route::resource('applicants', ApplicantController::class)->except(['edit','create']);
 Route::resource('jobs', JobController::class)->except(['edit','create']);
-Route::post('/users/login', [UserController::class, 'login']);
+Route::post('users/login', [UserController::class, 'login']);
+Route::get('/companies', [UserController::class, 'getAllCompany']);
+Route::get('/companies/{id}', [UserController::class, 'getCompanyById']);
+Route::get('/students', [UserController::class, 'getAllStudent']);
+// Route::post('/register',[UserController::class,'store']);

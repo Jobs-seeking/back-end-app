@@ -2,12 +2,11 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use App\Models\JobDetail;
 use App\Models\JobType;
-use App\Models\User;
-use Illuminate\Http\Resources\Json\JsonResource;
 
-class JobResource extends JsonResource
+class JobV2Resource extends JsonResource
 {
     /**
      * Transform the resource into an array.

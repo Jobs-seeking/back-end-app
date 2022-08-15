@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\JobResource;
+use App\Http\Resources\JobV2Resource;
 use App\Models\Job;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,11 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        return JobResource::collection(Job::paginate(10));
+        if (empty($req->companyId))
+            return JobV2Resource::collection(Job::all());
+        return JobV2Resource::collection(Job::where("company_id", $req->companyId)->get());
     }
 
     /**

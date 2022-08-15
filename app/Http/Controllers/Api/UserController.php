@@ -17,7 +17,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::paginate(10));
+        return UserResource::collection(User::all());
+    }
+    public function getAllCompany() {
+        return UserResource::collection(User::where("role", "company")->get());
+    }
+    public function getCompanyById($id) {
+        return new UserResource(User::where("role", "company")->where("id", $id)->first());
+    }
+    public function getAllStudent() {
+        return UserResource::collection(User::where("role", "student")->get());
     }
 
     /**
@@ -39,7 +48,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email'=>'required|email|string',
+            'email'=>'required|email|string|unique:users',
             'password'=>'required',
             'name'=>'string',
             'gender'=>'in:male,female',
@@ -72,6 +81,17 @@ class UserController extends Controller
         }
         return response()->json(['message' => "Failed to login!"], 401);
     }
+
+    // public function login()
+    // {
+    //     $credentials = request(['email', 'password']);
+
+    //     if (! $token = auth()->attempt($credentials)) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+
+    //     return $this->respondWithToken($token);
+    // }
 
     /**
      * Display the specified resource.
