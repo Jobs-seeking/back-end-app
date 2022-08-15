@@ -10,7 +10,7 @@ class JobDetail extends Model
 {
     protected $table = 'jobdetails';
     use HasFactory;
-    protected $filltable =[
+    protected $fillable =[
         'id',
         'title',
         'description',

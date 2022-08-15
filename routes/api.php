@@ -29,4 +29,5 @@ Route::post('users/login', [UserController::class, 'login']);
 Route::get('/companies', [UserController::class, 'getAllCompany']);
 Route::get('/companies/{id}', [UserController::class, 'getCompanyById']);
 Route::get('/students', [UserController::class, 'getAllStudent']);
+Route::get('/search-by-name', [JobController::class, 'searchByName']);
 // Route::post('/register',[UserController::class,'store']);

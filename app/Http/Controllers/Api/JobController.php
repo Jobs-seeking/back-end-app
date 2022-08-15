@@ -7,7 +7,7 @@ use App\Http\Resources\JobResource;
 use App\Http\Resources\JobV2Resource;
 use App\Models\Job;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 class JobController extends Controller
 {
     /**
@@ -88,5 +88,16 @@ class JobController extends Controller
     public function destroy(Job $job)
     {
         $job->delete();
+    }
+    public function searchByName(Request $request)
+    {
+        if($request->keyword == null or $request->keyword == "")
+        {
+            return DB::table('jobDetails')->get();
+        }
+        $result = DB::table('jobDetails')
+                ->where('title', 'like', "%$request->keyword%")
+                ->get();
+        return $result;
     }
 }

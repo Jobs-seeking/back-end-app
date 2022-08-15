@@ -53,10 +53,11 @@ class UserController extends Controller
             'name'=>'string',
             'gender'=>'in:male,female',
             'dateOfBirth'=>'date',
+            'phone'=>'phone',
             'description'=>'string|min:10',
             'address'=>'string',
             'status'=>'in:active,inactive',
-            'role'=>'in:company,student',
+            'role'=>'required|in:company,student',
         ]);
         $user = User::create($request->all());
         return new UserResource($user);
