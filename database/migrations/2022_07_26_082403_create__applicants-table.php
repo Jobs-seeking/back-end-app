@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('cover_letter', 1000)->nullable();
             $table->unsignedInteger('job_id')->nullable();
             $table->unsignedInteger('student_id')->nullable();
-            $table->unsignedInteger('year_experience')->nullable();
             $table->timestamps();
 
             $table->foreign('job_id')->references('id')->on('jobs')

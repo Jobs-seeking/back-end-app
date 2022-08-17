@@ -19,7 +19,7 @@ class JobV2Resource extends JsonResource
         return [
             'id' => $this->id,
             'companyId' => $this->company_id,
-            'jobType' => new JobTypeResource(JobType::where('id', $this->job_type_id)->first()),
+            'jobType' => new JobTypeResource(JobType::where('id', $this->job_type_id)->first('job_type')),
             'jobDetail'=> new JobDetailResource(JobDetail::where('job_id',$this->id)->first()),
         ];
     }

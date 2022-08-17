@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\JobType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class JobTypeSeeder extends Seeder
 {
@@ -15,6 +16,16 @@ class JobTypeSeeder extends Seeder
      */
     public function run()
     {
-        JobType::factory()->count(10)->create();
+        DB::table('jobtypes')->insert([
+            'job_type' => 'Full-time'
+        ]);
+
+        DB::table('jobtypes')->insert([
+            'job_type' => 'Part-time'
+        ]);
+
+        DB::table('jobtypes')->insert([
+            'job_type' => 'All'
+        ]);
     }
 }

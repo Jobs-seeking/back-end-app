@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserInfo>
@@ -19,16 +20,16 @@ class UserFactory extends Factory
         $status = ['active', 'inactive'];
         $role = ['student', 'admin', 'company'];
         $genders = ['male', 'female'];
-        $levels = ['second-year student', 'third-year student'];
+        $level = ['second-year student', 'third-year student'];
         return [
             'email' =>$this->faker->email(),
-            'password' =>$this->faker->bothify('########'),
+            'password' =>Hash::make($this->faker->bothify('########')),
             'name' =>$this->faker->name(),
             'gender'=>$genders[$this->faker->numberBetween(0,1)],
+            'level' => $level[$this->faker->numberBetween(0,1)],
             'image' =>$this->faker->imageUrl(640, 480, 'avatar', true),
             'dateOfBirth' => $this->faker->dateTime(),
             'phone' => $this->faker->phoneNumber(),
-            'level' => $levels[$this->faker->numberBetween(0,1)],
             'description' => $this->faker->text(),
             'address' => $this->faker->address(),
             'status' => $status[$this->faker->numberBetween(0,1)],

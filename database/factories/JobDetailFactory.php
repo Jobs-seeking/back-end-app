@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Job;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,6 +17,7 @@ class JobDetailFactory extends Factory
      */
     public function definition()
     {
+        $jobs = Job::all();
         return [
             'title' => $this->faker->name(),
             'description' => $this->faker->text(500),
@@ -23,7 +25,7 @@ class JobDetailFactory extends Factory
             'technical' => $this->faker->text(500),
             'salary' => $this->faker->randomDigit(),
             'deadline' => $this->faker->dateTime(),
-            'job_id' => $this->faker->numberBetween(1,10),
+            'job_id' => $jobs[$this->faker->unique()->numberBetween(0,($jobs->count())-1)]->id,
         ];
     }
 }

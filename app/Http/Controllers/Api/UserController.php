@@ -7,6 +7,7 @@ use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -59,7 +60,8 @@ class UserController extends Controller
             'status'=>'in:active,inactive',
             'role'=>'required|in:company,student',
         ]);
-        $user = User::create($request->all());
+        $user = User::create(array_merge($request->only('email','name','gender','dateOfBirth','phone','description','address','status','role',),
+        ['password'=>Hash::make($request->password)]));
         return new UserResource($user);
     }
 
@@ -75,10 +77,13 @@ class UserController extends Controller
             'email' => 'required|string|email',
             'password' => 'required'
         ]);
-        $user = User::where('email', $request->email)->where('password', $request->password)->get();
+        $user = User::where('email', $request->email)->get();
         if($user->count() > 0)
         {
-            return response()->json(array("message"=>'Login successful!', "data"=>$user[0]));
+            if(Hash::check($request->password, $user[0]->password)){
+                return response()->json(array("message"=>'Login successful!', "data"=>$user[0]));
+            }
+
         }
         return response()->json(['message' => "Failed to login!"], 401);
     }

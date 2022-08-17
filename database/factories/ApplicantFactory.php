@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Job;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,10 +19,13 @@ class ApplicantFactory extends Factory
      */
     public function definition()
     {
+        $students = User::where('role', 'student')->get();
+        $lengthStd = $students->count();
+        $jobs = Job::all();
+        $lengthjobs = $jobs->count();
         return [
-            'job_id' => $this->faker->numberBetween(1, 10),
-            'student_id' => $this->faker->numberBetween(1, 10),
-            'year_experience' => $this->faker->numberBetween(1, 5),
+            'job_id' => $jobs[$this->faker->numberBetween(0, $lengthjobs-1)]->id,
+            'student_id' => $students[$this->faker->numberBetween(0, $lengthStd-1)]->id,
             'cv' => $this->faker->imageUrl(640, 480, 'job_cv', true),
             'cover_letter' =>$this->faker->imageUrl(640, 480, 'job_cover_letter', true),
         ];

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\JobType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,9 +20,10 @@ class JobFactory extends Factory
     {
         $companies = User::where('role','company')->get();
         $length = $companies->count();
+        $lengthJobType = JobType::all()->count();
         return [
-            'company_id' =>$companies[$this->faker->numberBetween(0,$length-1)],
-            'job_type_id' =>$this->faker->numberBetween(1,10),
+            'company_id' =>$companies[$this->faker->numberBetween(0,$length-1)]->id,
+            'job_type_id' =>JobType::all()[$this->faker->numberBetween(0, $lengthJobType-1)]->id,
         ];
     }
 }

@@ -17,7 +17,7 @@ class ApplicantController extends Controller
      */
     public function index()
     {
-        return ApplicantResource::collection(Applicant::paginate(10));
+        return Applicant::orderBy('id', 'desc')->get();
     }
 
     /**

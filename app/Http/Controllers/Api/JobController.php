@@ -18,8 +18,8 @@ class JobController extends Controller
     public function index(Request $req)
     {
         if (empty($req->companyId))
-            return JobV2Resource::collection(Job::all());
-        return JobV2Resource::collection(Job::where("company_id", $req->companyId)->get());
+            return JobV2Resource::collection(Job::orderBy('id', 'desc')->get());
+        return JobV2Resource::collection(Job::orderBy('id','desc')->where("company_id", $req->companyId)->get());
     }
 
     /**
@@ -89,15 +89,30 @@ class JobController extends Controller
     {
         $job->delete();
     }
-    public function searchByName(Request $request)
+    public function searchJob(Request $request)
     {
-        if($request->keyword == null or $request->keyword == "")
+        if($request->all() == null or $request->all() == "")
         {
-            return DB::table('jobDetails')->get();
+            return DB::table('jobs')->join('jobDetails','jobs.id', '=', 'jobDetails.job_id')
+            ->join('users','users.id', '=', 'jobs.company_id')->orderBy('jobs.id', 'desc')->get('*');
         }
-        $result = DB::table('jobDetails')
-                ->where('title', 'like', "%$request->keyword%")
-                ->get();
+        if(!$request->max){
+            $request->max = 999999999;
+        }
+        if(!$request->min){
+            $request->min = 0;
+        }
+        $result = DB::table('jobs')
+                ->join('jobDetails','jobs.id', '=', 'jobDetails.job_id')
+                ->join('users','users.id', '=', 'jobs.company_id')
+
+                ->where('users.address', 'like', "%$request->location%")
+                ->where('jobDetails.title', 'like', "%$request->title%")
+                ->where('jobDetails.technical', 'like', "%$request->technical%")
+                ->where('jobDetails.salary', '<', $request->max)
+                ->where('jobDetails.salary', '>', $request->min)
+                ->orderBy('jobs.id', 'desc')
+                ->get('*');
         return $result;
     }
 }

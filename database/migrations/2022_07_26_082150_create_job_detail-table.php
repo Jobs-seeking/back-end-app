@@ -23,6 +23,10 @@ return new class extends Migration
             $table->date('deadline')->nullable();
             $table->unsignedInteger('job_id')->nullable();
             $table->timestamps();
+
+            $table->foreign('job_id')->references('id')->on('jobs')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 
