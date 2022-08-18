@@ -22,7 +22,7 @@ class JobDetailFactory extends Factory
             'title' => $this->faker->name(),
             'description' => $this->faker->text(500),
             'required' => $this->faker->text(500),
-            'technical' => $this->faker->text(500),
+            'technical' => $this->faker->text(100),
             'salary' => $this->faker->randomDigit(),
             'deadline' => $this->faker->dateTime(),
             'job_id' => $jobs[$this->faker->unique()->numberBetween(0,($jobs->count())-1)]->id,

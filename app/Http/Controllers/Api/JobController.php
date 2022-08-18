@@ -18,8 +18,14 @@ class JobController extends Controller
     public function index(Request $req)
     {
         if (empty($req->companyId))
-            return JobV2Resource::collection(Job::orderBy('id', 'desc')->get());
-        return JobV2Resource::collection(Job::orderBy('id','desc')->where("company_id", $req->companyId)->get());
+            return DB::table('jobs')
+            ->join('jobDetails','jobs.id', '=', 'jobDetails.job_id')
+            ->join('users','users.id', '=', 'jobs.company_id')
+            ->select('jobs.id', 'users.id as company_id', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')->get();
+        return DB::table('jobs')
+        ->join('jobDetails','jobs.id', '=', 'jobDetails.job_id')
+        ->join('users','users.id', '=', 'jobs.company_id')
+        ->select('jobs.id', 'users.id as company_id', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')->where('users.id',$req->companyId)->get();
     }
 
     /**
@@ -97,14 +103,15 @@ class JobController extends Controller
             ->join('users','users.id', '=', 'jobs.company_id')->orderBy('jobs.id', 'desc')->get('*');
         }
         if(!$request->max){
-            $request->max = 999999999;
+            $request->max = 5000;
         }
         if(!$request->min){
-            $request->min = 0;
+            $request->min = 200;
         }
         $result = DB::table('jobs')
                 ->join('jobDetails','jobs.id', '=', 'jobDetails.job_id')
                 ->join('users','users.id', '=', 'jobs.company_id')
+                ->select('jobs.id', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')
 
                 ->where('users.address', 'like', "%$request->location%")
                 ->where('jobDetails.title', 'like', "%$request->title%")
@@ -112,7 +119,7 @@ class JobController extends Controller
                 ->where('jobDetails.salary', '<', $request->max)
                 ->where('jobDetails.salary', '>', $request->min)
                 ->orderBy('jobs.id', 'desc')
-                ->get('*');
+                ->get();
         return $result;
     }
 }
