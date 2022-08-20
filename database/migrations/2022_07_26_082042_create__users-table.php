@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('dateOfBirth', 255)->nullable();
             $table->string('phone', 30)->nullable();
             $table->string('level', 255)->nullable();
-            $table->string('image', 1000)->nullable()->default('https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small/default-avatar-photo-placeholder-profile-picture-vector.jpg');
+            $table->string('image', 1000)->nullable()->default('https://w7.pngwing.com/pngs/589/83/png-transparent-account-avatar-contact-people-profile-user-basic-icon.png');
             $table->string('description', 1000)->nullable();
             $table->string('address', 255)->nullable();
             $table->enum('status', ['active', 'inactive'])->nullable()->default('active');

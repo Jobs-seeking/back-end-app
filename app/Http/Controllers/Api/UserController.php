@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 
 class UserController extends Controller
 {
@@ -18,16 +19,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::all());
+        return UserResource::collection(User::orderBy('id', 'desc')->get());
     }
-    public function getAllCompany() {
-        return UserResource::collection(User::where("role", "company")->get());
+    public function getAllCompany()
+    {
+        return UserResource::collection(User::where("role", "company")->orderBy('id','desc')->get());
     }
-    public function getCompanyById($id) {
-        return new UserResource(User::where("role", "company")->where("id", $id)->first());
+    public function getCompanyById($id)
+    {
+        return new UserResource(User::where("role", "company")->where("id", $id)->orderBy('id','desc')->first());
     }
-    public function getAllStudent() {
-        return UserResource::collection(User::where("role", "student")->get());
+    public function getAllStudent()
+    {
+        return UserResource::collection(User::where("role", "student")->orderBy('id','desc')->get());
     }
 
     /**
@@ -49,19 +53,27 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email'=>'required|email|string|unique:users',
-            'password'=>'required',
-            'name'=>'string',
-            'gender'=>'in:male,female',
-            'dateOfBirth'=>'date',
-            'phone'=>'phone',
-            'description'=>'string|min:10',
-            'address'=>'string',
-            'status'=>'in:active,inactive',
-            'role'=>'required|in:company,student',
+            'email' => 'required|email|string|unique:users',
+            'password' => 'required',
+            'name' => 'string',
+            'gender' => 'in:male,female',
+            'level' => 'in:second-year student,third-year student',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'dateOfBirth' => 'date',
+            'phone' => 'phone',
+            'description' => 'string|min:10',
+            'address' => 'string',
+            'status' => 'in:active,inactive',
+            'role' => 'required|in:company,student',
         ]);
-        $user = User::create(array_merge($request->only('email','name','gender','dateOfBirth','phone','description','address','status','role',),
-        ['password'=>Hash::make($request->password)]));
+        $user = User::create(array_merge(
+            $request->only('email', 'name', 'gender', 'dateOfBirth', 'phone', 'description', 'address', 'status'),
+            [
+                'password' => Hash::make($request->password),
+                "role"=> $request->role ?? "student",
+                'image' => $request->image ? URL::to('/').'/storage/'.$request->file('image')->store('image/users', 'public') : null
+            ]
+        ));
         return new UserResource($user);
     }
 
@@ -78,12 +90,10 @@ class UserController extends Controller
             'password' => 'required'
         ]);
         $user = User::where('email', $request->email)->get();
-        if($user->count() > 0)
-        {
-            if(Hash::check($request->password, $user[0]->password)){
-                return response()->json(array("message"=>'Login successful!', "data"=>$user[0]));
+        if ($user->count() > 0) {
+            if (Hash::check($request->password, $user[0]->password)) {
+                return response()->json(array("message" => 'Login successful!', "data" => $user[0]));
             }
-
         }
         return response()->json(['message' => "Failed to login!"], 401);
     }
@@ -130,7 +140,27 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update($request->all());
+        $request->validate([
+            'email' => 'email|string|unique:users',
+            'name' => 'string',
+            'gender' => 'in:male,female',
+            'level' => 'in:second-year student,third-year student',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'dateOfBirth' => 'date',
+            'description' => 'string|min:10',
+            'address' => 'string',
+            'status' => 'in:active,inactive',
+            'role' => 'in:company,student',
+        ]);
+
+        $user->update(array_merge(
+            $request->only('email', 'name', 'gender', 'dateOfBirth', 'phone', 'description', 'address', 'status'),
+            [
+                'password' => Hash::make($request->password),
+                "role"=> $request->role ?? "student",
+                'image' => $request->image ? URL::to('/').'/storage/'.$request->file('image')->store('image/users', 'public') : null
+            ]
+        ));
         return new UserResource($user);
     }
 

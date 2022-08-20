@@ -17,13 +17,14 @@ class JobDetailFactory extends Factory
      */
     public function definition()
     {
+        $array = array("Python", "Ruby", "Pascal", "C", "C# (C-Sharp)", "C++", "Objective-C", "Java", "JavaScript", "Swift");
         $jobs = Job::all();
         return [
             'title' => $this->faker->name(),
             'description' => $this->faker->text(500),
             'required' => $this->faker->text(500),
-            'technical' => $this->faker->text(100),
-            'salary' => $this->faker->randomDigit(),
+            'technical' => $array[$this->faker->numberBetween(0, count($array)-1)].", ".$array[$this->faker->numberBetween(0, count($array)-1)].", ".$array[$this->faker->numberBetween(0, count($array)-1)],
+            'salary' => $this->faker->numberBetween(100, 5000),
             'deadline' => $this->faker->dateTime(),
             'job_id' => $jobs[$this->faker->unique()->numberBetween(0,($jobs->count())-1)]->id,
         ];

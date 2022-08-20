@@ -17,15 +17,24 @@ class JobTypeSeeder extends Seeder
     public function run()
     {
         DB::table('jobtypes')->insert([
-            'job_type' => 'Full-time'
+            'job_type' => "Mobile"
         ]);
 
         DB::table('jobtypes')->insert([
-            'job_type' => 'Part-time'
+            'job_type' => "Testing"
         ]);
 
         DB::table('jobtypes')->insert([
-            'job_type' => 'All'
+            'job_type' => "Front end"
+        ]);
+        DB::table('jobtypes')->insert([
+            'job_type' => "Back end"
+        ]);
+        DB::table('jobtypes')->insert([
+            'job_type' => "Full Stack "
+        ]);
+        DB::table('jobtypes')->insert([
+            'job_type' => "BA"
         ]);
     }
 }

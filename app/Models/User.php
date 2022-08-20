@@ -17,6 +17,7 @@ class User extends Model
         'name',
         'gender',
         'level',
+        'image',
         'dateOfBirth',
         'phone',
         'description',

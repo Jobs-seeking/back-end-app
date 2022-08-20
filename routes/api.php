@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ApplicantController;
 use App\Http\Controllers\Api\JobController;
+use App\Http\Controllers\Api\MailerController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Resources\JobResource;
 use Illuminate\Http\Request;
@@ -31,3 +32,4 @@ Route::get('/companies/{id}', [UserController::class, 'getCompanyById']);
 Route::get('/students', [UserController::class, 'getAllStudent']);
 Route::get('/search-job', [JobController::class, 'searchJob']);
 // Route::post('/register',[UserController::class,'store']);
+Route::get('/send-mail', [MailerController::class, 'mailToEmployeer']);

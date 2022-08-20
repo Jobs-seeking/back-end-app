@@ -17,6 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('cv', 1000)->nullable();
             $table->string('cover_letter', 1000)->nullable();
+            $table->string('year_experience', 100)->nullable();
             $table->unsignedInteger('job_id')->nullable();
             $table->unsignedInteger('student_id')->nullable();
             $table->timestamps();

@@ -26,6 +26,7 @@ class ApplicantFactory extends Factory
         return [
             'job_id' => $jobs[$this->faker->numberBetween(0, $lengthjobs-1)]->id,
             'student_id' => $students[$this->faker->numberBetween(0, $lengthStd-1)]->id,
+            'year_experience' => $this->faker->numberBetween(0, 3),
             'cv' => $this->faker->imageUrl(640, 480, 'job_cv', true),
             'cover_letter' =>$this->faker->imageUrl(640, 480, 'job_cover_letter', true),
         ];

@@ -7,6 +7,7 @@ use App\Http\Requests\ApplicantRequest;
 use App\Http\Resources\ApplicantResource;
 use App\Models\Applicant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class ApplicantController extends Controller
 {
@@ -36,9 +37,23 @@ class ApplicantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store( ApplicantRequest $request)
+    public function store(Request $request)
     {
-        $applicant = Applicant::create($request->all());
+        $request->validate([
+            'job_id' => 'required',
+            'student_id' => 'required',
+            'year_experience' => 'required|string',
+            'cv' => 'required|mimes:txt,pdf',
+            'cover_letter' => 'required|mimes:txt,pdf,docx',
+        ]);
+
+        $applicant = Applicant::create(array_merge(
+            $request->only('job_id', 'student_id', 'year_experience'),
+            [
+                'cv' => URL::to('/').'/storage/'.$request->file('cv')->store('image/applicants', 'public'),
+                'cover_letter' => $request->cover_letter? URL::to('/').'/storage/'.$request->file('cover_letter')->store('image/applicants', 'public') : null
+            ]
+        ));
         return new ApplicantResource($applicant);
     }
 

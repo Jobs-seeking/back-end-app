@@ -21,11 +21,13 @@ class JobController extends Controller
             return DB::table('jobs')
             ->join('jobDetails','jobs.id', '=', 'jobDetails.job_id')
             ->join('users','users.id', '=', 'jobs.company_id')
-            ->select('jobs.id', 'users.id as company_id', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')->get();
+            ->join('jobtypes','jobtypes.id', '=', 'jobs.job_type_id')
+            ->select('jobs.id', 'users.id as company_id', 'jobtypes.job_type', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')->orderBy('jobs.id','desc')->get();
         return DB::table('jobs')
         ->join('jobDetails','jobs.id', '=', 'jobDetails.job_id')
         ->join('users','users.id', '=', 'jobs.company_id')
-        ->select('jobs.id', 'users.id as company_id', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')->where('users.id',$req->companyId)->get();
+        ->join('jobtypes','jobtypes.id', '=', 'jobs.job_type_id')
+        ->select('jobs.id', 'users.id as company_id', 'jobtypes.job_type', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')->where('users.id',$req->companyId)->orderBy('jobs.id','desc')->get();
     }
 
     /**
@@ -111,13 +113,16 @@ class JobController extends Controller
         $result = DB::table('jobs')
                 ->join('jobDetails','jobs.id', '=', 'jobDetails.job_id')
                 ->join('users','users.id', '=', 'jobs.company_id')
-                ->select('jobs.id', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')
+                ->join('jobtypes','jobtypes.id', '=', 'jobs.job_type_id')
 
+                ->select('jobs.id', 'jobs.company_id', 'jobtypes.job_type', 'jobDetails.title', 'jobDetails.technical', 'jobDetails.salary', 'jobDetails.technical', 'jobDetails.description', 'jobDetails.required', 'jobDetails.deadline', 'users.address', 'users.image', 'jobDetails.created_at','jobDetails.updated_at')
+
+                ->where('jobtypes.job_type', 'like', "%$request->type%")
                 ->where('users.address', 'like', "%$request->location%")
                 ->where('jobDetails.title', 'like', "%$request->title%")
                 ->where('jobDetails.technical', 'like', "%$request->technical%")
-                ->where('jobDetails.salary', '<', $request->max)
-                ->where('jobDetails.salary', '>', $request->min)
+                ->where('jobDetails.salary', '<=', $request->max)
+                ->where('jobDetails.salary', '>=', $request->min)
                 ->orderBy('jobs.id', 'desc')
                 ->get();
         return $result;
