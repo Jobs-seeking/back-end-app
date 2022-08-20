@@ -21,6 +21,7 @@ class UserFactory extends Factory
         $role = ['student', 'admin', 'company'];
         $genders = ['male', 'female'];
         $level = ['second-year student', 'third-year student'];
+        $address = ['Ho Chi Minh ', 'Da Nang ', "Ha Noi "];
         return [
             'email' =>$this->faker->email(),
             'password' =>Hash::make($this->faker->bothify('########')),
@@ -31,7 +32,7 @@ class UserFactory extends Factory
             'dateOfBirth' => $this->faker->dateTime(),
             'phone' => $this->faker->phoneNumber(),
             'description' => $this->faker->text(),
-            'address' => $this->faker->address(),
+            'address' => $address[$this->faker->numberBetween(0, 2)].$this->faker->address(),
             'status' => $status[$this->faker->numberBetween(0,1)],
             'role' => $role[$this->faker->numberBetween(0,2)],
         ];
